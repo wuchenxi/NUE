@@ -23,7 +23,7 @@ print(float(alpha), float(gamma))
 
 #gamma is the length of slit
 
-y=(6, [3, 2, 1, 0, 5, 4], [gamma, 1-alpha-gamma, alpha, gamma, 1-alpha-gamma, alpha])
+y=(6, [2, 3, 1, 5, 0, 4], [gamma, 1-alpha-gamma, alpha, gamma, 1-alpha-gamma, alpha])
 
 #Rauzy induction
 def induction(ifs):
@@ -52,7 +52,13 @@ def induction(ifs):
                 new_perm+=[i]
         return 2, (n, new_perm, newlengths)
     else:
-        return 0, ifs
+        new_perm=[]
+        for i in perm[:-1]:
+            if i==n-1:
+                new_perm+=[perm[-1]]
+            else:
+                new_perm+=[i]
+        return 0, (n-1, new_perm, lengths[:-1])
 
 sequence=[]
 
@@ -74,8 +80,10 @@ steps=0
 while(True):
     flag, y=induction(y)
     steps+=1
-    sequence+=[flag]
     if flag==0:
+        print(steps)
+    sequence+=[flag]
+    if y[0]==1:
         break
 print(summary(sequence))
 print(steps)
