@@ -8,14 +8,14 @@ def contfrac(l):
         r=1/(a+r)
     return r
 
-lst=[i*i for i in range(1, 41)]
+lst=[i*i for i in range(1, 51)]
 
 alpha=contfrac(lst)
 
 rotation=(2, [1, 0], [1-alpha, alpha])
 
 gamma=Fraction(0, 1)
-for i in range(1, 20):
+for i in range(1, 26):
     r=contfrac(lst[:2*i+1])
     gamma+=Fraction(2, 1)*(r.numerator-r.denominator*alpha)
 
@@ -23,7 +23,7 @@ print(float(alpha), float(gamma))
 
 #gamma is the length of slit
 
-y=(6, [2, 3, 1, 5, 0, 4], [gamma, 1-alpha-gamma, alpha, gamma, 1-alpha-gamma, alpha])
+y=(6, [3, 2, 1, 0, 5, 4], [gamma, 1-alpha-gamma, alpha, gamma, 1-alpha-gamma, alpha])
 
 #Rauzy induction
 def induction(ifs):
@@ -57,21 +57,25 @@ def induction(ifs):
 sequence=[]
 
 def summary(sequence):
+    r=[]
     cur=0
     count=0
     for i in sequence:
         if i!=cur:
             if cur!=0:
-                print(count)
+                r+=[count]
             cur=i
             count=1
         else:
             count+=1
-    return 0
+    return r
 
+steps=0
 while(True):
     flag, y=induction(y)
+    steps+=1
     sequence+=[flag]
     if flag==0:
         break
-summary(sequence)
+print(summary(sequence))
+print(steps)
